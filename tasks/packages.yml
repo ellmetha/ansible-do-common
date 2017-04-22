@@ -1,0 +1,22 @@
+- name: Check whether aptitude is installed or not
+  stat: path=/usr/bin/aptitude
+  register: aptitude_stat
+
+- name: Ensure that requirements for the apt action are installed
+  shell: "apt-get update && apt-get install -y python-apt aptitude"
+  when: not aptitude_stat.stat.exists
+
+- name: apt-get update/upgrade
+  apt: update_cache=yes upgrade=yes autoremove=yes cache_valid_time=3600
+
+- name: Install required packages
+  apt: "name={{ item }} state=present"
+  with_items:
+    - build-essential
+    - git
+    - rsync
+    - sudo
+
+- name: Install additional packages if applicable
+  apt: "name={{ item }} state=present"
+  with_items: "{{ common_additional_packages }}"

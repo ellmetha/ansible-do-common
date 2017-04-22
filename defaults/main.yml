@@ -1,0 +1,5 @@
+---
+
+# The following packages will be installed in addition to the required packages that are already
+# installed by the role.
+common_additional_packages: []
