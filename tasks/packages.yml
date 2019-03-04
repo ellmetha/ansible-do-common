@@ -10,12 +10,13 @@
   apt: update_cache=yes upgrade=yes autoremove=yes cache_valid_time=3600
 
 - name: Install required packages
-  apt: "name={{ item }} state=present"
-  with_items:
-    - build-essential
-    - git
-    - rsync
-    - sudo
+  apt:
+    state: present
+    name:
+      - build-essential
+      - git
+      - rsync
+      - sudo
 
 - name: Install additional packages if applicable
   apt: "name={{ item }} state=present"
